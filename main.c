@@ -38,6 +38,21 @@ void clientCreate(){
     fclose(data);
 }
 
+void getClientByAcc() {
+    FILE *data = fopen("data.dat", "rb+");
+    int account;
+    Client client;
+    printf("Qual numero de conta você deseja consultar? ");
+    scanf("%d", &account);
+    while(fread(&client, sizeof(client), 1, data) != 0) {
+        if (account == client.acc_number) {
+            printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+        }
+    }
+
+    fclose(data);
+}
+
 void clientList() {
     FILE *data = fopen("data.dat", "rb+");
     Client client;
@@ -78,6 +93,7 @@ int main() {
             break;
 
         case 2:
+            getClientByAcc();
             break;
 
         case 3:
