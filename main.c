@@ -41,9 +41,18 @@ void clientCreate(){
 void clientList() {
     FILE *data = fopen("data.dat", "rb+");
     Client client;
-    while(fread(&client, sizeof(client), 1, data)!= 0) {
-        // fread(&client, sizeof(client), 1, data);
-        printf("Conta: %d\tNome: %s\tSaldo: %f\n", client.acc_number, client.nome, client.balance);
+    while(fread(&client, sizeof(client), 1, data) != 0) {
+        printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+    }
+    fclose(data);
+}
+
+void clientRewind() {
+    FILE *data = fopen("data.dat", "rb+");
+    Client client;
+    rewind(data);
+    while(fread(&client, sizeof(client), 1, data) != 0) {
+        printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
     }
     fclose(data);
 }
@@ -82,6 +91,7 @@ int main() {
             break;
 
         case 6:
+            clientRewind();
             break;
 
         case 7:
