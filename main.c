@@ -1,6 +1,27 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    char nome[50];
+    int acc_number;
+    float balance;
+} Client;
+
+void createFile(){
+    FILE *data = fopen("data.dat", "rb+");
+    if (data == NULL){
+        data = fopen("data.dat", "wb+");
+    }
+    fclose(data);
+}
+
+void clientList() {
+    FILE *data = fopen("data.dat", "rb+");
+    fclose(data);
+}
 
 int main() {
+    createFile();
     int choice = 0;
     while (choice != 7) {
         printf("Escolha uma opção: \n"
@@ -17,18 +38,27 @@ int main() {
         {
         case 1:
             break;
+
         case 2:
             break;
+
         case 3:
             break;
+
         case 4:
             break;
+
         case 5:
+            clientList();
             break;
+
         case 6:
             break;
+
         case 7:
+            printf("Encerrado.\n");
             break;
+
         default:
             printf("Número inválido.\n");
             break;
