@@ -15,8 +15,36 @@ void createFile(){
     fclose(data);
 }
 
+void clientCreate(){
+    FILE *data = fopen("data.dat", "ab+");
+    Client client, client_test;
+    int id, write_test = 0;
+    printf("Nome do cliente: ");
+    scanf("%s", client.nome);
+    printf("Número da conta: ");
+    scanf("%d", &client.acc_number);
+    printf("Saldo: ");
+    scanf("%f", &client.balance);
+    while (write_test != 1) {
+        printf("Onde você deseja salvar? ");
+        scanf("%d", &id);
+        fseek(data, sizeof(client) * id, SEEK_SET);
+        size_t read_test = fread(&client_test, sizeof(client_test), 1, data);
+        if (read_test == 0){
+            fwrite(&client, sizeof(client), 1, data);
+            write_test = 1;
+        }
+    }
+    fclose(data);
+}
+
 void clientList() {
     FILE *data = fopen("data.dat", "rb+");
+    Client client;
+    while(fread(&client, sizeof(client), 1, data)!= 0) {
+        // fread(&client, sizeof(client), 1, data);
+        printf("Conta: %d\tNome: %s\tSaldo: %f\n", client.acc_number, client.nome, client.balance);
+    }
     fclose(data);
 }
 
@@ -37,6 +65,7 @@ int main() {
         switch (choice)
         {
         case 1:
+            clientCreate();
             break;
 
         case 2:
