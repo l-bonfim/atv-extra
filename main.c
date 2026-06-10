@@ -53,6 +53,50 @@ void getClientByAcc() {
     fclose(data);
 }
 
+void attBalanceByAcc() {
+    FILE *data = fopen("data.dat", "rb+");
+    int account;
+    float newBalance;
+    Client client;
+    printf("Qual numero de conta você deseja atualizar? ");
+    scanf("%d", &account);
+    printf("Qual novo saldo da conta? ");
+    scanf("%f", &newBalance);
+    while(fread(&client, sizeof(client), 1, data) != 0) {
+        if (account == client.acc_number) {
+            client.balance = newBalance;
+            printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+        }
+    }
+
+    fclose(data);
+}
+
+void removeClientByAcc() {
+    FILE *data = fopen("data.dat", "rb+");
+    FILE *dataTemp = fopen("temp.dat","wb+");
+    int account;
+    Client client;
+    printf("Qual numero de conta você deseja excluir? ");
+    scanf("%d", &account);
+    while(fread(&client, sizeof(client), 1, data) != 0) {
+        if (account != client.acc_number) {
+            fwrite(&client, sizeof(client), 1, dataTemp);
+        }
+    }
+    fclose(dataTemp);
+    fclose(data);
+
+    remove("data.dat");
+    rename("temp.dat", "data.dat");
+    
+    FILE *dataAtt = fopen("data.dat", "rb+");
+    while(fread(&client, sizeof(client), 1, dataAtt) != 0) {
+        printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+    }
+    fclose(dataAtt);
+}
+
 void clientList() {
     FILE *data = fopen("data.dat", "rb+");
     Client client;
@@ -97,9 +141,11 @@ int main() {
             break;
 
         case 3:
+            attBalanceByAcc();
             break;
 
         case 4:
+            removeClientByAcc();
             break;
 
         case 5:
