@@ -65,6 +65,11 @@ void attBalanceByAcc() {
     while(fread(&client, sizeof(client), 1, data) != 0) {
         if (account == client.acc_number) {
             client.balance = newBalance;
+
+            fseek(data, -sizeof(Client), SEEK_CUR);
+            fwrite(&client, sizeof(Client), 1, data);
+
+            printf("Conta atualizada!\n");
             printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
         }
     }
