@@ -33,6 +33,8 @@ void clientCreate(){
         if (read_test == 0){
             fwrite(&client, sizeof(client), 1, data);
             write_test = 1;
+        } else {
+            printf("Posição ocupada.\n");
         }
     }
     fclose(data);
@@ -46,7 +48,7 @@ void getClientByAcc() {
     scanf("%d", &account);
     while(fread(&client, sizeof(client), 1, data) != 0) {
         if (account == client.acc_number) {
-            printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+            printf("\tConta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
         }
     }
 
@@ -70,7 +72,7 @@ void attBalanceByAcc() {
             fwrite(&client, sizeof(Client), 1, data);
 
             printf("Conta atualizada!\n");
-            printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+            printf("\tConta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
         }
     }
 
@@ -97,7 +99,7 @@ void removeClientByAcc() {
     
     FILE *dataAtt = fopen("data.dat", "rb+");
     while(fread(&client, sizeof(client), 1, dataAtt) != 0) {
-        printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+        printf("\tConta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
     }
     fclose(dataAtt);
 }
@@ -106,7 +108,7 @@ void clientList() {
     FILE *data = fopen("data.dat", "rb+");
     Client client;
     while(fread(&client, sizeof(client), 1, data) != 0) {
-        printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+        printf("\tConta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
     }
     fclose(data);
 }
@@ -116,7 +118,7 @@ void clientRewind() {
     Client client;
     rewind(data);
     while(fread(&client, sizeof(client), 1, data) != 0) {
-        printf("Conta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
+        printf("\tConta: %d\tNome: %s\tSaldo: %.2f\n", client.acc_number, client.nome, client.balance);
     }
     fclose(data);
 }
